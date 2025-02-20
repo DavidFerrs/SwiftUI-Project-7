@@ -43,11 +43,15 @@ struct ContentView: View {
     let currencyFormat = Locale.current.currency!.identifier
     
     var personalItems: [ExpenseItem] {
-        return expenses.items.filter {$0.type == "Personal"}
+        var result = expenses.items.filter {$0.type == "Personal"}
+        result.sort { return $0.amount < $1.amount}
+        return result
     }
 
     var businessItems: [ExpenseItem] {
-        return expenses.items.filter {$0.type == "Business"}
+        var result =  expenses.items.filter {$0.type == "Business"}
+        result.sort { return $0.amount < $1.amount}
+        return result
     }
     
     var body: some View {
@@ -112,10 +116,10 @@ struct ContentView: View {
     }
     
     func removeItems(at offsets: IndexSet, type: String) {
-        // Obter os itens que precisam ser removidos com base no tipo e índices
-        let itemsToRemove = offsets.map { expenses.items.filter { $0.type == type }[$0] }
+        var itemsList = type == "Personal" ? personalItems : businessItems
         
-        print(itemsToRemove)
+        // Obter os itens que precisam ser removidos com base no tipo e índices
+        let itemsToRemove = offsets.map { itemsList[$0] }
             
         // Filtrar os itens da lista principal e remover os itens com o ID correspondente
         expenses.items.removeAll { item in
