@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		631633602D675EC700AEE85C /* AddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6316335F2D675EC700AEE85C /* AddView.swift */; };
 		63A216562D668A7A00618CD1 /* iExpenseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A216552D668A7A00618CD1 /* iExpenseApp.swift */; };
 		63A216582D668A7A00618CD1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A216572D668A7A00618CD1 /* ContentView.swift */; };
 		63A2165A2D668A7B00618CD1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 63A216592D668A7B00618CD1 /* Assets.xcassets */; };
@@ -14,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6316335F2D675EC700AEE85C /* AddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddView.swift; sourceTree = "<group>"; };
 		63A216522D668A7A00618CD1 /* iExpense.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iExpense.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63A216552D668A7A00618CD1 /* iExpenseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iExpenseApp.swift; sourceTree = "<group>"; };
 		63A216572D668A7A00618CD1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -53,6 +55,7 @@
 			children = (
 				63A216552D668A7A00618CD1 /* iExpenseApp.swift */,
 				63A216572D668A7A00618CD1 /* ContentView.swift */,
+				6316335F2D675EC700AEE85C /* AddView.swift */,
 				63A216592D668A7B00618CD1 /* Assets.xcassets */,
 				63A2165B2D668A7B00618CD1 /* Preview Content */,
 			);
@@ -139,6 +142,7 @@
 			files = (
 				63A216582D668A7A00618CD1 /* ContentView.swift in Sources */,
 				63A216562D668A7A00618CD1 /* iExpenseApp.swift in Sources */,
+				631633602D675EC700AEE85C /* AddView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
