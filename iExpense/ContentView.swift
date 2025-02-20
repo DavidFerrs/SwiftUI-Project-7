@@ -40,24 +40,64 @@ struct ContentView: View {
     @State private var expenses = Expenses()
     @State private var showingSheet = false
     
+    let currencyFormat = Locale.current.currency!.identifier
+    
+    var personalItems: [ExpenseItem] {
+        return expenses.items.filter {$0.type == "Personal"}
+    }
+
+    var businessItems: [ExpenseItem] {
+        return expenses.items.filter {$0.type == "Business"}
+    }
+    
     var body: some View {
         NavigationStack {
             List{
-                ForEach(expenses.items) { item in
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(item.name)
-                                .font(.headline)
+                Section("Personal items") {
+                    ForEach(personalItems) { item in
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text(item.name)
+                                    .font(.headline)
+                                
+                                Text(item.type)
+                            }
                             
-                            Text(item.type)
+                            Spacer()
+                            
+                            Text(item.amount, format: .currency(code: currencyFormat))
+                                .foregroundStyle(getAmountStyle(for: item.amount))
+                                .fontWeight(getAmountFontWeight(for: item.amount))
                         }
-                        
-                        Spacer()
-                        
-                        Text(item.amount, format: .currency(code: "USD"))
+                    }
+                    .onDelete { offsets in
+                        removeItems(at: offsets, type: "Personal")
                     }
                 }
-                .onDelete(perform: removeItems)
+                
+                Section("Business items") {
+                    ForEach(businessItems) { item in
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text(item.name)
+                                    .font(.headline)
+                                
+                                Text(item.type)
+                            }
+                            
+                            Spacer()
+                            
+                            Text(item.amount, format: .currency(code: currencyFormat))
+                                .foregroundStyle(getAmountStyle(for: item.amount))
+                                .fontWeight(getAmountFontWeight(for: item.amount))
+
+                        }
+                    }
+                    .onDelete { offsets in
+                        removeItems(at: offsets, type: "Business")
+                    }
+                }
+                
             }
             .navigationTitle("iExpense")
             .toolbar {
@@ -71,9 +111,39 @@ struct ContentView: View {
         }
     }
     
-    func removeItems(at offsets: IndexSet) {
-        expenses.items.remove(atOffsets: offsets)
+    func removeItems(at offsets: IndexSet, type: String) {
+        // Obter os itens que precisam ser removidos com base no tipo e índices
+        let itemsToRemove = offsets.map { expenses.items.filter { $0.type == type }[$0] }
+        
+        print(itemsToRemove)
+            
+        // Filtrar os itens da lista principal e remover os itens com o ID correspondente
+        expenses.items.removeAll { item in
+            itemsToRemove.contains { $0.id == item.id }
+        }
     }
+    
+    func getAmountStyle(for amount: Double) -> Color {
+        switch amount {
+        case ..<10:
+            return .mint
+        case 10..<100:
+            return .blue
+        default:
+            return .red
+        }
+    }
+    
+    func getAmountFontWeight(for amount: Double) -> Font.Weight {
+            switch amount {
+            case ..<10:
+                return .light
+            case 10..<100:
+                return .regular
+            default:
+                return .bold
+            }
+        }
 }
 
 #Preview {
