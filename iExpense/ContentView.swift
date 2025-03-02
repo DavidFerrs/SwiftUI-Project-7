@@ -57,7 +57,7 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             List{
-                Section("Personal items") {
+                Section(personalItems.isEmpty ? "" : "Personal items") {
                     ForEach(personalItems) { item in
                         HStack {
                             VStack(alignment: .leading) {
@@ -79,7 +79,7 @@ struct ContentView: View {
                     }
                 }
                 
-                Section("Business items") {
+                Section(businessItems.isEmpty ? "" :"Business items") {
                     ForEach(businessItems) { item in
                         HStack {
                             VStack(alignment: .leading) {
@@ -105,18 +105,22 @@ struct ContentView: View {
             }
             .navigationTitle("iExpense")
             .toolbar {
-                Button("Add expense", systemImage: "plus") {
-                    showingSheet.toggle()
+//                Button("Add expense", systemImage: "plus") {
+//                    showingSheet.toggle()
+//                }
+                NavigationLink("Add expense") {
+                    AddView(expenses: expenses)
+                        .navigationBarBackButtonHidden()
                 }
             }
-            .sheet(isPresented: $showingSheet, content: {
-                AddView(expenses: expenses)
-            })
+//            .sheet(isPresented: $showingSheet, content: {
+//                AddView(expenses: expenses)
+//            })
         }
     }
     
     func removeItems(at offsets: IndexSet, type: String) {
-        var itemsList = type == "Personal" ? personalItems : businessItems
+        let itemsList = type == "Personal" ? personalItems : businessItems
         
         // Obter os itens que precisam ser removidos com base no tipo e índices
         let itemsToRemove = offsets.map { itemsList[$0] }
